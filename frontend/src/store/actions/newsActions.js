@@ -39,7 +39,11 @@ export const getNews = () => {
       dispatch(getNewsRequest());
       const {data} = await axios(serverApi + '/news');
 
-      dispatch(getNewsSuccess(data));
+      let newData;
+      if (data.length !==0 ) {
+        newData = data;
+      }
+      dispatch(getNewsSuccess(newData));
     } catch (e) {
       dispatch(getNewsFailure(e.message));
     }

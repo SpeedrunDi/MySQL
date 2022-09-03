@@ -5,19 +5,22 @@ import {getOneNews} from "../../store/actions/newsActions";
 import {deleteMessage, getMessages, postMessage} from "../../store/actions/messagesActions";
 import Message from "../../components/Message/Message";
 import AddMessageForm from "../../components/AddMessageForm/AddMessageForm";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 const FullPost = ({match}) => {
   const dispatch = useDispatch();
   const post = useSelector(state => state.newsData.post);
   const messages = useSelector(state => state.messagesData.messages);
+  const loading = useSelector(state => state.newsData.loading);
+  const messagesLoading = useSelector(state => state.messagesData.loading);
 
   useEffect(() => {
     dispatch(getOneNews(match.params.id));
     dispatch(getMessages(match.params.id));
-  }, []);
+  }, [dispatch, match]);
 
   const onDeleteMessage = async id => {
-    dispatch(deleteMessage(id));
+    await dispatch(deleteMessage(id));
     dispatch(getMessages(match.params.id));
   };
 
@@ -32,33 +35,39 @@ const FullPost = ({match}) => {
 
   return post && (
     <Container>
-      <Box marginBottom="30px">
-        <Typography variant="h4">
-          {post.title}
-        </Typography>
-        <Typography color="gray">
-          {post.datetime.toString()}
-        </Typography>
-        <Typography lineHeight="2" fontSize="18px"  >
-          {post.description}
-        </Typography>
-      </Box>
-      <Box>
-        <Typography variant="h4" textAlign="center">
-          Comments
-        </Typography>
-        <Box paddingY="20px" sx={{maxHeight: "400px", overflowY: "scroll"}}>
-          {messages ?
-            messages.map(message => (
-              <Message
-                key={message.id + 'message'}
-                message={message}
-                onDelete={onDeleteMessage}
-              />
-            )) : <Typography textAlign="center">No comments</Typography>
-          }
-        </Box>
-      </Box>
+      {loading ? <Spinner/> : (
+        <>
+          <Box marginBottom="30px">
+            <Typography variant="h4">
+              {post.title}
+            </Typography>
+            <Typography color="gray">
+              {post.datetime.toString()}
+            </Typography>
+            <Typography lineHeight="2" fontSize="18px"  >
+              {post.description}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography variant="h4" textAlign="center">
+              Comments
+            </Typography>
+            {messagesLoading ? <Spinner/> : (
+              <Box paddingY="20px" sx={{maxHeight: "400px", overflowY: "scroll"}}>
+                {messages ?
+                  messages.map(message => (
+                    <Message
+                      key={message.id + 'message'}
+                      message={message}
+                      onDelete={onDeleteMessage}
+                    />
+                  )) : <Typography textAlign="center">No comments</Typography>
+                }
+              </Box>
+            )}
+          </Box>
+        </>
+      )}
       <AddMessageForm onSend={onSendComment}/>
     </Container>
   );

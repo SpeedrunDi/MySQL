@@ -5,6 +5,7 @@ const Message = ({message, onDelete}) => {
   return (
     <Grid container
           justifyContent="space-between"
+          alignItems="center"
           marginBottom="30px"
           padding="10px 20px"
           sx={{border: "3px solid black"}}
