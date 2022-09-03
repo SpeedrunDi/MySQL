@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Container, Typography} from "@mui/material";
 import {getOneNews} from "../../store/actions/newsActions";
-import {getMessages} from "../../store/actions/messagesActions";
+import {deleteMessage, getMessages} from "../../store/actions/messagesActions";
 import Message from "../../components/Message/Message";
 
 const FullPost = ({match}) => {
@@ -14,6 +14,11 @@ const FullPost = ({match}) => {
     dispatch(getOneNews(match.params.id));
     dispatch(getMessages(match.params.id));
   }, []);
+
+  const onDeleteMessage = async id => {
+    dispatch(deleteMessage(id));
+    dispatch(getMessages(match.params.id));
+  };
 
   if (post) {
     post.datetime = new Date(post.datetime);
@@ -29,7 +34,7 @@ const FullPost = ({match}) => {
           {post.datetime.toString()}
         </Typography>
         <Typography lineHeight="2" fontSize="18px">
-          {post.description} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi cum iste laborum magni pariatur repudiandae sed. Aliquid nihil nostrum quibusdam sit voluptates. Adipisci assumenda eveniet illum ipsa labore magni mollitia voluptates. Animi atque commodi dignissimos dolor eligendi fugiat incidunt, labore minima odit perspiciatis provident quas qui quidem repellendus repudiandae rerum sint suscipit, tempore tenetur vero! A accusantium amet animi asperiores, aut blanditiis consequatur debitis dignissimos dolorum eos error et exercitationem fugiat incidunt inventore ipsa iure iusto laudantium magnam modi nemo, nihil nisi nulla odit officia quae quasi quidem quos saepe, sapiente sint vel voluptate voluptatibus. Ab aliquam asperiores eveniet magni.
+          {post.description}
         </Typography>
       </Box>
       <Box height="400px">
@@ -38,7 +43,7 @@ const FullPost = ({match}) => {
         </Typography>
         {messages ?
           messages.map(message => (
-            <Message message={message}/>
+            <Message key={message.id + 'message'} message={message} onDelete={onDeleteMessage}/>
           )) : <Typography textAlign="center">No comment</Typography>
         }
       </Box>

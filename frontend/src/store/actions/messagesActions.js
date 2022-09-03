@@ -9,6 +9,10 @@ export const POST_MESSAGE_REQUEST = 'POST_MESSAGE_REQUEST';
 export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
 export const POST_MESSAGE_FAILURE = 'POST_MESSAGE_FAILURE';
 
+export const DELETE_MESSAGE_REQUEST = 'DELETE_MESSAGE_REQUEST';
+export const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
+export const DELETE_MESSAGE_FAILURE = 'DELETE_MESSAGE_FAILURE';
+
 const getMessagesRequest = () => ({type: GET_MESSAGES_REQUEST});
 const getMessagesSuccess = messages => ({type: GET_MESSAGES_SUCCESS, payload: messages});
 const getMessagesFailure = error => ({type: GET_MESSAGES_FAILURE, payload: error});
@@ -16,10 +20,6 @@ const getMessagesFailure = error => ({type: GET_MESSAGES_FAILURE, payload: error
 const postMessageRequest = () => ({type: POST_MESSAGE_REQUEST});
 const postMessageSuccess = () => ({type: POST_MESSAGE_SUCCESS});
 const postMessageFailure = error => ({type: POST_MESSAGE_FAILURE, payload: error});
-
-export const DELETE_MESSAGE_REQUEST = 'DELETE_MESSAGE_REQUEST';
-export const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
-export const DELETE_MESSAGE_FAILURE = 'DELETE_MESSAGE_FAILURE';
 
 const deleteMessageRequest = () => ({type: DELETE_MESSAGE_REQUEST});
 const deleteMessageSuccess = () => ({type: DELETE_MESSAGE_SUCCESS});
@@ -38,7 +38,7 @@ export const getMessages = id => {
   };
 };
 
-export const postNews = postData => {
+export const postMessage = postData => {
   return async dispatch => {
     try {
       dispatch(postMessageRequest());
@@ -50,11 +50,11 @@ export const postNews = postData => {
   };
 };
 
-export const deleteNews = () => {
+export const deleteMessage = id => {
   return async dispatch => {
     try {
       dispatch(deleteMessageRequest())
-
+      await axios.delete(serverApi + '/messages/' + id);
       dispatch(deleteMessageSuccess());
     } catch (e) {
       dispatch(deleteMessageFailure(e.message));

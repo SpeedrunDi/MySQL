@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Grid, Typography} from "@mui/material";
 
-const Message = ({message}) => {
+const Message = ({message, onDelete}) => {
   return (
     <Grid container
           justifyContent="space-between"
@@ -18,7 +18,7 @@ const Message = ({message}) => {
         </Typography>
       </Grid>
       <Grid item>
-        <Button variant="outlined">
+        <Button variant="outlined" onClick={() => onDelete(message.id)}>
           Delete
         </Button>
       </Grid>

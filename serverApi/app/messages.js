@@ -9,8 +9,7 @@ router.get('/', async (req, res) => {
   try {
     if (news_id) {
       [messages] = await mysqlDb.getConnection().query(
-        'select ?, ?, ? from ?? where new_id = ?',
-        ['id', 'author', 'message', 'messages', news_id]
+        'select id, author, message from messages where new_id =' + news_id
         );
     } else {
       [messages] = await mysqlDb.getConnection().query('select id, author, message from messages');
@@ -18,6 +17,7 @@ router.get('/', async (req, res) => {
   } catch (e) {
     console.log(e.message);
   }
+  console.log(messages);
   res.send(messages);
 });
 

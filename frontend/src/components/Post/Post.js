@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, Grid} from "@mui/material";
+import {Box, Button, Grid, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {serverApi} from "../../config";
 
@@ -21,11 +21,15 @@ const Post = ({post, onDeletePost}) => {
       </Grid>
       <Grid item width="85%">
         <Box>
-          {post.title}
+          <Typography whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+            {post.title}
+          </Typography>
         </Box>
         <Grid container alignItems="center">
           <Grid item marginRight="40px">
-            {post.datetime}
+            <Typography variant="span">
+              {post.datetime}
+            </Typography>
           </Grid>
           <Grid item width="60%" sx={{display: "flex", justifyContent: "space-between"}}>
             <Button to={'/news/' + post.id} component={Link}>Read full post</Button>
