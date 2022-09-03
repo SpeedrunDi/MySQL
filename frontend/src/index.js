@@ -4,14 +4,16 @@ import {BrowserRouter} from "react-router-dom";
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {Provider} from "react-redux";
 import App from './App';
-import newsReducer from "./store/reducers/newsReducer";
-import './index.css';
 import thunk from "redux-thunk";
+import newsReducer from "./store/reducers/newsReducer";
+import messagesReducer from "./store/reducers/messagesReducer";
+import './index.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  newsData: newsReducer
+  newsData: newsReducer,
+  messagesData: messagesReducer
 });
 
 const store = createStore(

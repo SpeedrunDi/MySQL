@@ -3,7 +3,7 @@ import {Button, Container, Grid, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import Post from "../../components/Post/Post";
 import {useDispatch, useSelector} from "react-redux";
-import {getNews, getOneNews} from "../../store/actions/newsActions";
+import {getNews} from "../../store/actions/newsActions";
 
 const News = () => {
   const dispatch = useDispatch();
@@ -12,10 +12,6 @@ const News = () => {
   useEffect(() => {
     dispatch(getNews());
   }, []);
-
-  const onGetOnePost = id => {
-    dispatch(getOneNews(id));
-  };
 
   return (
     <Container>
@@ -34,7 +30,7 @@ const News = () => {
           {
             news &&
             news.map(post => (
-              <Post key={post.id} post={post} onGetPost={onGetOnePost}/>
+              <Post key={post.id} post={post}/>
             ))
           }
         </Grid>

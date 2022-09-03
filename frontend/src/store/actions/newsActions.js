@@ -24,6 +24,14 @@ const postNewsRequest = () => ({type: POST_NEWS_REQUEST});
 const postNewsSuccess = () => ({type: POST_NEWS_SUCCESS});
 const postNewsFailure = error => ({type: POST_NEWS_FAILURE, payload: error});
 
+export const DELETE_NEWS_REQUEST = 'DELETE_NEWS_REQUEST';
+export const DELETE_NEWS_SUCCESS = 'DELETE_NEWS_SUCCESS';
+export const DELETE_NEWS_FAILURE = 'DELETE_NEWS_FAILURE';
+
+const deleteNewsRequest = () => ({type: DELETE_NEWS_REQUEST});
+const deleteNewsSuccess = () => ({type: DELETE_NEWS_SUCCESS});
+const deleteNewsFailure = error => ({type: DELETE_NEWS_FAILURE, payload: error});
+
 export const getNews = () => {
   return async dispatch => {
     try {
@@ -42,8 +50,8 @@ export const getOneNews = id => {
     try {
       dispatch(getOneNewsRequest());
       const {data} = await axios('http://localhost:8000/news/' + id);
-      console.log(data)
-      dispatch(getOneNewsSuccess());
+
+      dispatch(getOneNewsSuccess(data));
     } catch (e) {
       dispatch(getOneNewsFailure(e.message));
     }
@@ -65,11 +73,11 @@ export const postNews = postData => {
 export const deleteNews = () => {
   return async dispatch => {
     try {
-      dispatch(postNewsRequest());
+      dispatch(deleteNewsRequest());
 
-      dispatch(postNewsSuccess());
+      dispatch(deleteNewsSuccess());
     } catch (e) {
-      dispatch(postNewsFailure(e.message));
+      dispatch(deleteNewsFailure(e.message));
     }
   };
 };

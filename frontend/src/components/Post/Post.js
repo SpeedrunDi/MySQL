@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Button, Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 
-const Post = ({post, onGetPost}) => {
+const Post = ({post}) => {
   return (
     <Grid
       container
@@ -27,7 +27,7 @@ const Post = ({post, onGetPost}) => {
             {post.datetime}
           </Grid>
           <Grid item width="60%" sx={{display: "flex", justifyContent: "space-between"}}>
-            <Button to={'/news/' + post.id} component={Link} onClick={() => onGetPost(post.id)}>Read full post</Button>
+            <Button to={'/news/' + post.id} component={Link}>Read full post</Button>
             <Button sx={{marginLeft: "auto"}}>Delete</Button>
           </Grid>
         </Grid>
