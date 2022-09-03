@@ -40,10 +40,26 @@ const AddPostForm = ({onSendPost}) => {
   return (
     <Box padding="20px" maxWidth="720px" margin="0 auto">
       <Box marginBottom="30px">
-        <TextField name="title" label="Title" variant="outlined" fullWidth onChange={onChangeMessage}/>
+        <TextField
+          name="title"
+          label="Title"
+          variant="outlined"
+          fullWidth
+          required
+          onChange={onChangeMessage}
+          value={newPost.title}
+        />
       </Box>
       <Box marginBottom="30px">
-        <TextField name="description" label="description" variant="outlined" fullWidth onChange={onChangeMessage}/>
+        <TextField
+          name="description"
+          label="description"
+          variant="outlined"
+          fullWidth
+          required
+          onChange={onChangeMessage}
+          value={newPost.description}
+        />
       </Box>
       <Box marginBottom="30px">
         <TextField name="image" type="file" fullWidth onChange={onChangeFile}/>

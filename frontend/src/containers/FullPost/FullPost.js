@@ -2,8 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Container, Typography} from "@mui/material";
 import {getOneNews} from "../../store/actions/newsActions";
-import {deleteMessage, getMessages} from "../../store/actions/messagesActions";
+import {deleteMessage, getMessages, postMessage} from "../../store/actions/messagesActions";
 import Message from "../../components/Message/Message";
+import AddMessageForm from "../../components/AddMessageForm/AddMessageForm";
 
 const FullPost = ({match}) => {
   const dispatch = useDispatch();
@@ -20,6 +21,11 @@ const FullPost = ({match}) => {
     dispatch(getMessages(match.params.id));
   };
 
+  const onSendComment = async commentData => {
+    await dispatch(postMessage(commentData, match.params.id));
+    dispatch(getMessages(match.params.id));
+  };
+
   if (post) {
     post.datetime = new Date(post.datetime);
   }
@@ -27,26 +33,33 @@ const FullPost = ({match}) => {
   return post && (
     <Container>
       <Box marginBottom="30px">
-        <Typography variant="h3">
+        <Typography variant="h4">
           {post.title}
         </Typography>
         <Typography color="gray">
           {post.datetime.toString()}
         </Typography>
-        <Typography lineHeight="2" fontSize="18px">
+        <Typography lineHeight="2" fontSize="18px"  >
           {post.description}
         </Typography>
       </Box>
-      <Box height="400px">
-        <Typography variant="h3">
+      <Box>
+        <Typography variant="h4" textAlign="center">
           Comments
         </Typography>
-        {messages ?
-          messages.map(message => (
-            <Message key={message.id + 'message'} message={message} onDelete={onDeleteMessage}/>
-          )) : <Typography textAlign="center">No comment</Typography>
-        }
+        <Box paddingY="20px" sx={{maxHeight: "400px", overflowY: "scroll"}}>
+          {messages ?
+            messages.map(message => (
+              <Message
+                key={message.id + 'message'}
+                message={message}
+                onDelete={onDeleteMessage}
+              />
+            )) : <Typography textAlign="center">No comments</Typography>
+          }
+        </Box>
       </Box>
+      <AddMessageForm onSend={onSendComment}/>
     </Container>
   );
 };

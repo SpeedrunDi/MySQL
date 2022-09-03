@@ -68,6 +68,7 @@ export const postNews = postData => {
       dispatch(postNewsSuccess());
     } catch (e) {
       dispatch(postNewsFailure(e.message));
+      throw e;
     }
   };
 };

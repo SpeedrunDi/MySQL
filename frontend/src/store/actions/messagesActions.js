@@ -31,21 +31,28 @@ export const getMessages = id => {
       dispatch(getMessagesRequest());
       const {data} = await axios( serverApi + '/messages?news_id=' + id);
 
-      dispatch(getMessagesSuccess(data));
+      let newData;
+      if (data.length !== 0) {
+        newData = data.reverse();
+      }
+
+      dispatch(getMessagesSuccess(newData));
     } catch (e) {
       dispatch(getMessagesFailure(e.message));
     }
   };
 };
 
-export const postMessage = postData => {
+export const postMessage = (postData, id) => {
   return async dispatch => {
     try {
       dispatch(postMessageRequest());
+      await axios.post(serverApi + '/messages?news_id=' + id, postData);
 
       dispatch(postMessageSuccess());
     } catch (e) {
       dispatch(postMessageFailure(e.message));
+      throw e;
     }
   };
 };

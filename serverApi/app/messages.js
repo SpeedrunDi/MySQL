@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  if (!req.body.message && !req.query.news_id) {
+  if (!req.body.message || !req.query.news_id) {
     return res.status(400).send({error: 'Data not valid'});
   }
 
