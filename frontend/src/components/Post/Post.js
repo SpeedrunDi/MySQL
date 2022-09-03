@@ -3,7 +3,7 @@ import {Box, Button, Grid} from "@mui/material";
 import {Link} from "react-router-dom";
 import {serverApi} from "../../config";
 
-const Post = ({post}) => {
+const Post = ({post, onDeletePost}) => {
   return (
     <Grid
       container
@@ -15,7 +15,7 @@ const Post = ({post}) => {
     >
       <Grid item width="15%">
         <img
-          src={post ? serverApi + '/uploads/' + post.image : null} alt=""
+          src={post.image ? serverApi + '/uploads/' + post.image : null} alt=""
           style={{width: "60px", height: "60px", display: "block", margin: "0 auto"}}
         />
       </Grid>
@@ -29,7 +29,7 @@ const Post = ({post}) => {
           </Grid>
           <Grid item width="60%" sx={{display: "flex", justifyContent: "space-between"}}>
             <Button to={'/news/' + post.id} component={Link}>Read full post</Button>
-            <Button sx={{marginLeft: "auto"}}>Delete</Button>
+            <Button onClick={() => onDeletePost(post.id)}>Delete</Button>
           </Grid>
         </Grid>
       </Grid>

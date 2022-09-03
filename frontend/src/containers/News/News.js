@@ -3,7 +3,7 @@ import {Button, Container, Grid, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import Post from "../../components/Post/Post";
 import {useDispatch, useSelector} from "react-redux";
-import {getNews} from "../../store/actions/newsActions";
+import {deleteNews, getNews} from "../../store/actions/newsActions";
 
 const News = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,11 @@ const News = () => {
   useEffect(() => {
     dispatch(getNews());
   }, []);
+
+  const onDeletePost = async id => {
+    await dispatch(deleteNews(id));
+    dispatch(getNews());
+  };
 
   return (
     <Container>
@@ -30,7 +35,7 @@ const News = () => {
           {
             news &&
             news.map(post => (
-              <Post key={post.id} post={post}/>
+              <Post key={post.id} post={post} onDeletePost={onDeletePost}/>
             ))
           }
         </Grid>

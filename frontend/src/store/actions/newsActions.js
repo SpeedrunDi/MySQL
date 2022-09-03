@@ -72,11 +72,11 @@ export const postNews = postData => {
   };
 };
 
-export const deleteNews = () => {
+export const deleteNews = id => {
   return async dispatch => {
     try {
       dispatch(deleteNewsRequest());
-
+      await axios.delete(serverApi + '/news/' + id);
       dispatch(deleteNewsSuccess());
     } catch (e) {
       dispatch(deleteNewsFailure(e.message));
