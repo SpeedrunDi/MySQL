@@ -62,6 +62,7 @@ export const postNews = postData => {
   return async dispatch => {
     try {
       dispatch(postNewsRequest());
+      await axios.post('http://localhost:8000/news', postData);
 
       dispatch(postNewsSuccess());
     } catch (e) {

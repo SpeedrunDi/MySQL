@@ -23,7 +23,7 @@ const News = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <Button to="new" component={Link} variant="outlined">Add new post</Button>
+            <Button to="/new-post" component={Link} variant="outlined">Add new post</Button>
           </Grid>
         </Grid>
         <Grid item width="100%">
