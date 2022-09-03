@@ -30,9 +30,11 @@ const AddPostForm = ({onSendPost}) => {
   const createPost = () => {
     const formData = new FormData();
 
+    Object.keys(newPost).forEach(key => {
+      formData.append(key, newPost[key]);
+    });
 
-
-    onSendPost(newPost);
+    onSendPost(formData);
   };
 
   return (
@@ -46,7 +48,7 @@ const AddPostForm = ({onSendPost}) => {
       <Box marginBottom="30px">
         <TextField name="image" type="file" fullWidth onChange={onChangeFile}/>
       </Box>
-      <Button onClick={createPost} variant="outlined">
+      <Button type="submit" onClick={createPost} variant="outlined">
         Save
       </Button>
     </Box>

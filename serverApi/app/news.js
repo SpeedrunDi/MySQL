@@ -1,7 +1,22 @@
 const express = require('express');
 const mysqlDb = require('../mysqlDb');
 const moment = require("moment");
+const multer = require("multer");
+const config = require("../config");
+const {nanoid} = require("nanoid");
+const path = require("path");
 const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, config.uploadPath)
+  },
+  filename: (req, file, cb) => {
+    cb(null, nanoid() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({storage});
 
 router.get('/', async (req, res) => {
   let news;
@@ -26,7 +41,7 @@ router.get('/:id', async (req, res) => {
   res.send(news[0]);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single("image"), async (req, res) => {
   if (!req.body.title || !req.body.description) {
     return res.status(400).send({error: 'Data not valid'});
   }

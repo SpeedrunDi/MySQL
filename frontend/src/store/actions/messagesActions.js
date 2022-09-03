@@ -1,4 +1,5 @@
 import axios from "axios";
+import {serverApi} from "../../config";
 
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST';
 export const GET_MESSAGES_SUCCESS = 'GET_MESSAGES_SUCCESS';
@@ -28,7 +29,7 @@ export const getMessages = id => {
   return async dispatch => {
     try {
       dispatch(getMessagesRequest());
-      const {data} = await axios('http://localhost:8000/messages?news_id=' + id);
+      const {data} = await axios( serverApi + '/messages?news_id=' + id);
 
       dispatch(getMessagesSuccess(data));
     } catch (e) {

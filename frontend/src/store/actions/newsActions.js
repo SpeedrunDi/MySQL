@@ -1,4 +1,5 @@
 import axios from "axios";
+import {serverApi} from "../../config";
 
 export const GET_NEWS_REQUEST = 'GET_NEWS_REQUEST';
 export const GET_NEWS_SUCCESS = 'GET_NEWS_SUCCESS';
@@ -36,7 +37,7 @@ export const getNews = () => {
   return async dispatch => {
     try {
       dispatch(getNewsRequest());
-      const {data} = await axios('http://localhost:8000/news');
+      const {data} = await axios(serverApi + '/news');
 
       dispatch(getNewsSuccess(data));
     } catch (e) {
@@ -49,7 +50,7 @@ export const getOneNews = id => {
   return async dispatch => {
     try {
       dispatch(getOneNewsRequest());
-      const {data} = await axios('http://localhost:8000/news/' + id);
+      const {data} = await axios(serverApi + '/news/' + id);
 
       dispatch(getOneNewsSuccess(data));
     } catch (e) {
@@ -62,7 +63,7 @@ export const postNews = postData => {
   return async dispatch => {
     try {
       dispatch(postNewsRequest());
-      await axios.post('http://localhost:8000/news', postData);
+      await axios.post(serverApi + '/news', postData);
 
       dispatch(postNewsSuccess());
     } catch (e) {

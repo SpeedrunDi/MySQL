@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Button, Grid} from "@mui/material";
 import {Link} from "react-router-dom";
+import {serverApi} from "../../config";
 
 const Post = ({post}) => {
   return (
@@ -14,7 +15,7 @@ const Post = ({post}) => {
     >
       <Grid item width="15%">
         <img
-          src={post ? post.image : null} alt=""
+          src={post ? serverApi + '/uploads/' + post.image : null} alt=""
           style={{width: "60px", height: "60px", display: "block", margin: "0 auto"}}
         />
       </Grid>
